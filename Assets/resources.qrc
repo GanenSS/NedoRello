@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Nedorello.png</file>
+        <file>edit.png</file>
+        <file>No.png</file>
+        <file>Yes.png</file>
+        <file>add.png</file>
+        <file>remove.png</file>
+        <file>visibility.png</file>
+    </qresource>
+</RCC>
