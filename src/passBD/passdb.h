@@ -64,7 +64,7 @@ private:
 public slots:
     bool    createConnection();
 
-    void    addRowUser(const QString& login, const QString& password);
+    void    addRowUser(const combiningWindows::LoginCredentials &cred);
     void    creatingAccount(const combiningWindows::LoginCredentials &cred);
     void    enterAccount(const combiningWindows::LoginCredentials &cred);
 
@@ -78,6 +78,9 @@ public slots:
 
     void createdNewList(const combiningWindows::listInfo& info);
     void addRowList(const combiningWindows::listInfo& info);
+
+    void createdNewCard(const combiningWindows::cardInfo& info);
+    void addRowCard(const combiningWindows::cardInfo& info);
 };
 
 #endif // LISTDB_H

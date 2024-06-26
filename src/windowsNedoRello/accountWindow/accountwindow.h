@@ -25,11 +25,14 @@ public:
     };
 
     createBoard creatBoard;
+
+    int userId;
 private:
     Ui::accountWindow *ui;
 
 public slots:
     void setLogin(const QString &login);
+    QString getLogin();
     void openCreateBoard();
     void slotCreatedBoard();
 signals:

@@ -13,7 +13,9 @@ boardNedoRello::boardNedoRello(QWidget *parent)
 
     popUp = new PopUp();
 
-    ui->horizontalLayoutLists->addItem(spacer);
+    horBoxLayoutLists = new QHBoxLayout(ui->containerWidget);
+    horBoxLayoutLists->addItem(spacer);
+    ui->containerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 boardNedoRello::~boardNedoRello()
@@ -62,14 +64,23 @@ void boardNedoRello::addListInBoard(QWidget *list)
 {
     vertBoxLayoutLists = new QVBoxLayout;
     vertBoxLayoutLists->addWidget(list);
+    list->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     spacerList = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     vertBoxLayoutLists->addItem(spacerList);
 
-    ui->horizontalLayoutLists->removeItem(spacer);
-    ui->horizontalLayoutLists->addLayout(vertBoxLayoutLists);
-    ui->horizontalLayoutLists->addItem(spacer);
+    horBoxLayoutLists->removeItem(spacer);
+    horBoxLayoutLists->addLayout(vertBoxLayoutLists);
+    horBoxLayoutLists->addItem(spacer);
 
-    ui->horizontalLayoutLists->update();
+    ui->verticalLayoutForList->update();
+}
+
+void boardNedoRello::updatingGeometryScrolArea()
+{
+    // ui->scrollArea->setWidgetResizable(true);
+    // ui->scrollAreaWidgetContents->updateGeometry();
+    // ui->scrollArea->updateGeometry();
+    // ui->scrollArea->repaint();
 }
 

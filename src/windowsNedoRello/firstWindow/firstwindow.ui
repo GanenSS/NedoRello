@@ -94,7 +94,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <item>
          <widget class="QLabel" name="labelPassword">
           <property name="text">
-           <string>Пороль</string>
+           <string>Пароль</string>
           </property>
          </widget>
         </item>

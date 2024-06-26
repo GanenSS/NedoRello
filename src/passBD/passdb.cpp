@@ -9,6 +9,7 @@ passDB::passDB(QObject *parent)
     connect(&combWindows, &combiningWindows::signalGetLoginCredentialsFirstWindow,          this, &passDB::enterAccount);
     connect(&combWindows, &combiningWindows::signalClickedButtonCreateBoard,                this, &passDB::createdNewBoard);
     connect(&combWindows, &combiningWindows::signalRequestToCreatelist,                     this, &passDB::createdNewList);
+    connect(&combWindows, &combiningWindows::signalRequestToCreateCard,                     this, &passDB::createdNewCard);
 }
 
 passDB::~passDB()
@@ -60,7 +61,7 @@ bool passDB::createConnection()
     }
 }
 
-void passDB::addRowUser(const QString &login, const QString &password)
+void passDB::addRowUser(const combiningWindows::LoginCredentials &cred)
 {
     int row = modelUser->rowCount();
     modelUser->insertRow(row);
@@ -69,10 +70,12 @@ void passDB::addRowUser(const QString &login, const QString &password)
     modelUser->setData(index, row);
 
     index = modelUser->index(row, loginColumnUser);
-    modelUser->setData(index, login);
+    modelUser->setData(index, cred.login);
 
     index = modelUser->index(row, passwdColumnUser);
-    modelUser->setData(index, password);
+    modelUser->setData(index, cred.password);
+
+    modelUser->submitAll();
 }
 
 void passDB::creatingAccount(const combiningWindows::LoginCredentials &cred)
@@ -83,8 +86,10 @@ void passDB::creatingAccount(const combiningWindows::LoginCredentials &cred)
     }
     else if(loginVerificationRequest(cred.login) == 1)
     {
-        addRowUser(cred.login, hashPassword(cred.password));
-        modelUser->submitAll();
+        combiningWindows::LoginCredentials infoCred;
+        infoCred.login = cred.login;
+        infoCred.password = hashPassword(cred.password);
+        addRowUser(infoCred);
         emit combWindows.signalCreatedAccountRegistrationWindow();
     }
 }
@@ -249,4 +254,50 @@ void passDB::addRowList(const combiningWindows::listInfo &info)
     modelList->setData(index, info.idBoard);
 
     modelList->submitAll();
+}
+
+void passDB::createdNewCard(const combiningWindows::cardInfo &info)
+{
+    combiningWindows::cardInfo card;
+    card.idCard = modelCard->rowCount();
+    card.title = info.title;
+    card.description = info.description;
+    card.deadLinesString = info.deadLines.toString("yyyy-MM-dd HH:mm:ss");
+    card.deadLines = info.deadLines;
+    card.stage = info.stage;
+    card.idList = info.idList;
+    card.userID = info.userID;
+
+    addRowCard(card);
+
+    emit combWindows.signalCreatedCard(card);
+}
+
+void passDB::addRowCard(const combiningWindows::cardInfo &info)
+{
+    int row = modelCard->rowCount();
+    modelCard->insertRow(row);
+
+    QModelIndex index = modelCard->index(row, idColumnCard);
+    modelCard->setData(index, info.idCard);
+
+    index = modelCard->index(row, nameColumnCard);
+    modelCard->setData(index, info.title);
+
+    index = modelCard->index(row, descriptionColumnCard);
+    modelCard->setData(index, info.description);
+
+    index = modelCard->index(row, dateColumnCard);
+    modelCard->setData(index, info.deadLinesString);
+
+    index = modelCard->index(row, completedColumnCard);
+    modelCard->setData(index, info.stage);
+
+    index = modelCard->index(row, listIdColumnCard);
+    modelCard->setData(index, info.idList);
+
+    index = modelCard->index(row, userIdColumnCard);
+    modelCard->setData(index, info.userID);
+
+    modelCard->submitAll();
 }

@@ -14,15 +14,14 @@ combiningWindows::combiningWindows(QObject *parent)
     connect(&accWindow, &accountWindow::signalCreatedBoardAccountWindow,            this, &combiningWindows::slotClickedButtonCreateBoard);
     connect(this,       &combiningWindows::signalErrorLoginCredentialsFirstWindow,  this, &combiningWindows::wrongPasswordFirstWindow);
     connect(this,       &combiningWindows::signalCreatedBoard,                      this, &combiningWindows::createdBoard);
-
     connect(this,       &combiningWindows::signalCreatedList,                       this, &combiningWindows::createdList);
 
+    connect(this,       &combiningWindows::signalCreatedCard,                       this, &combiningWindows::createdCard);
 
 }
 
 combiningWindows::~combiningWindows()
 {
-    //delete &widgetList;
 }
 
 void combiningWindows::openFirstWindow()
@@ -47,11 +46,11 @@ void combiningWindows::getLoginCredentialsRegistrationWindow(const registrationW
 {
     LoginCredentials combCred;
     combCred.login = cred.login;
-    combCred.password = cred.login;
+    combCred.password = cred.password;
     emit signalGetLoginCredentialsRegistrationWindow(combCred);
 }
 
-void combiningWindows::loginIsInDbRegWindow() // Оповищение пользователя о том, что такой логин уже существует
+void combiningWindows::loginIsInDbRegWindow() // Оповещение пользователя о том, что такой логин уже существует
 {
     regWindow.loginIsInDB();
 }
@@ -82,6 +81,9 @@ void combiningWindows::createdBoard(const boardInfo &info) //Создание Д
     widgetsBoard.append(board);
     board->show();
 
+    accWindow.userId = info.userId;
+    qDebug() << accWindow.userId;
+
     connect(board, &boardNedoRello::signalRequestToCreatelistBoard, this, &combiningWindows::slotRequestToCreatelist);
 
     connect(board, &boardNedoRello::destroyedBoard, this, &combiningWindows::deletingWidgets);
@@ -101,25 +103,17 @@ void combiningWindows::createdList(const listInfo &infoList) // Создание
 {
     list = new listNedoRello();
     list->idList = infoList.idList;
-    list->idBoard = infoList.idBoard;
     list->setTitleList(infoList.title);
     widgetsList.append(list);
+    list->idBoard = infoList.idBoard;
     board->addListInBoard(list);
+
+    connect(list, &listNedoRello::signalinformationForCombining, this, &combiningWindows::slotRequestToCreateCard);
 
 }
 
 void combiningWindows::deletingWidgets(int idBoard)
-{
-    for(int i = 0; i < widgetsList.length(); i++)
-    {
-        if(widgetsList[i]->idBoard == idBoard)
-        {
-            delete widgetsList[i];
-            widgetsList[i] = nullptr;
-            widgetsList.remove(i);
-        }
-    }
-
+{    
     for(int i = 0; i < widgetsBoard.length(); i++)
     {
         if(widgetsBoard[i]->IdBoard == idBoard)
@@ -132,6 +126,51 @@ void combiningWindows::deletingWidgets(int idBoard)
 
 }
 
+void combiningWindows::slotRequestToCreateCard(const listNedoRello::infoCardList &info)
+{
+    cardInfo card;
+    card.title = info.title;
+    card.description = info.description;
+    card.deadLines = info.deadLines;
+    card.idList = info.idList;
+    card.userID = accWindow.userId;
+    card.stage = "В ПРОЦЕССЕ";
+    emit signalRequestToCreateCard(card);
+}
+
+void combiningWindows::createdCard(const cardInfo &info)
+{
+    cardNedoRello *card = new cardNedoRello;
+    card->setTitle(info.title);
+    card->setDescription(info.description);
+    card->setDeadLines(info.deadLines);
+    card->setLogin(accWindow.getLogin());
+
+    for(int i = 0; i < widgetsList.length(); i++)
+    {
+        if(widgetsList[i]->idList == info.idList)
+        {
+            for(int j = 0; j < widgetsBoard.length(); j++)
+            {
+                if(widgetsBoard[j]->IdBoard == widgetsList[i]->idBoard)
+                {
+                    if(widgetsList[i]->counterCard != 0)
+                    {
+                        widgetsList[i]->resizeList();
+                        widgetsBoard[j]->updatingGeometryScrolArea();
+
+                        widgetsList[i]->addCardInList(card);
+                    }
+                    else
+                    {
+                        widgetsList[i]->addCardInList(card);
+                    }
+                }
+            }
+        }
+    }
+}
+
 void combiningWindows::openAccountWindow(const QString &login) //Открытие окна аккаунта
 {
     fstWindow.close();
@@ -139,7 +178,7 @@ void combiningWindows::openAccountWindow(const QString &login) //Открыти�
     accWindow.setLogin(login);
 }
 
-void combiningWindows::wrongPasswordFirstWindow() //Сообщение о неправильном логине или пороле
+void combiningWindows::wrongPasswordFirstWindow() //Сообщение о неправильном логине или пароле
 {
-    fstWindow.setErrorText("Неверный логин или пороль");
+    fstWindow.setErrorText("Неверный логин или пароль");
 }

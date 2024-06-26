@@ -6,6 +6,7 @@
 #include "accountwindow.h"
 #include "boardnedorello.h"
 #include "listnedorello.h"
+#include "cardnedorello.h"
 
 #include <QObject>
 #include <QDebug>
@@ -39,14 +40,29 @@ public:
         QString title;
     };
 
+    struct cardInfo
+    {
+        int idCard;
+        QString title;
+        QString description;
+        QDateTime deadLines;
+        int idList;
+        QString stage;
+        int userID;
+        QString deadLinesString;
+        QString login;
+
+    };
+
     firstWindow fstWindow;
     registrationWindow regWindow;
     accountWindow accWindow;
     boardNedoRello *board;
     listNedoRello *list;
+    cardNedoRello *card;
 private:
     QVector<boardNedoRello*> widgetsBoard;
-    QVector<listNedoRello*> widgetsList;
+    QVector<listNedoRello*>  widgetsList;
 private slots:
     void openFirstWindow();
     void getLoginCredentialsFirstWindow(const firstWindow::LoginCredentials& cred);
@@ -66,6 +82,9 @@ private slots:
 
     void deletingWidgets(int idBoard);
 
+    void slotRequestToCreateCard(const listNedoRello::infoCardList& info);
+    void createdCard(const cardInfo& info);
+
 signals:
     void signalGetLoginCredentialsFirstWindow(const LoginCredentials& cred);
     void signalErrorLoginCredentialsFirstWindow();
@@ -81,6 +100,9 @@ signals:
 
     void signalRequestToCreatelist(const listInfo& infoList);
     void signalCreatedList(const listInfo& infoList);
+
+    void signalRequestToCreateCard(const cardInfo& info);
+    void signalCreatedCard(const cardInfo& info);
 
 };
 

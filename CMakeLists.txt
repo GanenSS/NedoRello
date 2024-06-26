@@ -14,8 +14,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 include_directories(
-
-
     src/passBD
 
     src/windowsNedoRello/firstWindow
@@ -26,6 +24,7 @@ include_directories(
         src/windowsNedoRello/accountWindow/inputBoard
 
     src/windowsNedoRello/List
+        src/windowsNedoRello/List/windowCreateOrEditing
     src/windowsNedoRello/Board
         src/windowsNedoRello/Board/windowCreatedList
     src/windowsNedoRello/Cards
@@ -64,6 +63,9 @@ set(PROJECT_SOURCES
         src/windowsNedoRello/List/listnedorello.cpp
         src/windowsNedoRello/List/listnedorello.h
         src/windowsNedoRello/List/listnedorello.ui
+            src/windowsNedoRello/List/windowCreateOrEditing/windowcreateoreditingcard.cpp
+            src/windowsNedoRello/List/windowCreateOrEditing/windowcreateoreditingcard.h
+            src/windowsNedoRello/List/windowCreateOrEditing/windowcreateoreditingcard.ui
 
         src/windowsNedoRello/Board/boardnedorello.cpp
         src/windowsNedoRello/Board/boardnedorello.h

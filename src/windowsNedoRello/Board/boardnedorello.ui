@@ -184,9 +184,17 @@
           <height>573</height>
          </rect>
         </property>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayoutLists"/>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayoutForList">
+           <item>
+            <widget class="QWidget" name="containerWidget" native="true">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 0, 0);</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>

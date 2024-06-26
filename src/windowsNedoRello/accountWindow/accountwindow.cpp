@@ -20,6 +20,11 @@ void accountWindow::setLogin(const QString &login)
     ui->labelLogin->setText(login);
 }
 
+QString accountWindow::getLogin()
+{
+    return ui->labelLogin->text();
+}
+
 void accountWindow::openCreateBoard()
 {
     creatBoard.show();
