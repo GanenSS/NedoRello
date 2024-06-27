@@ -39,6 +39,7 @@ public slots:
     QString getFirstPassword();
     QString getSecondPassword();
 
+    void closeWindow();
 signals:
     void signalClickedButtonCancel();
     void signalClickedButtonSave(const LoginCredentials& cred);

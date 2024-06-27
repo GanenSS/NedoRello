@@ -7,8 +7,8 @@ firstWindow::firstWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    connect(ui->buttonRegistration, &QPushButton::clicked,      this, &QWidget::close);
     connect(ui->buttonRegistration, &QPushButton::clicked,      this, &firstWindow::slotClickedButtonRegistration);
+    connect(ui->buttonRegistration, &QPushButton::clicked,      this, &firstWindow::closeWindow);
     connect(ui->buttonEnter,        &QPushButton::clicked,      this, &firstWindow::slotClickedButtonEnter);
     connect(ui->buttonVision,       &QPushButton::pressed,      this, &firstWindow::pressedButtonVision);
     connect(ui->buttonVision,       &QPushButton::released,     this, &firstWindow::releasedButtonVision);
@@ -45,6 +45,11 @@ void firstWindow::releasedButtonVision()
 void firstWindow::setErrorText(const QString& ErrorMessage)
 {
     ui->labelPasswordErroreMessage->setText(ErrorMessage);
+}
+
+void firstWindow::closeWindow()
+{
+    delete this;
 }
 
 QString firstWindow::getLogin()

@@ -7,13 +7,17 @@ createBoard::createBoard(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->buttonCreate, &QPushButton::clicked, this, &createBoard::slotClickedButtonCreate);
-    connect(ui->buttonCancel, &QPushButton::clicked, this, &QWidget::close);
-    connect(&confWindow, &confirmationWindow::signalClickedButtonCreate, this, &createBoard::slotClickedButtonCreateConfirmationWindow);
+    connect(ui->buttonCancel, &QPushButton::clicked, this, &createBoard::closeWindow);
 }
 
 createBoard::~createBoard()
 {
     delete ui;
+}
+
+void createBoard::closeEvent(QCloseEvent *event)
+{
+    closeWindow();
 }
 
 QString createBoard::getNameBoard()
@@ -40,13 +44,15 @@ void createBoard::slotClickedButtonCreate()
         }
         else
         {
-            confWindow.show();
+            emit signalClickedButtonCreate();
+            closeWindow();
         }
     }
 }
 
-void createBoard::slotClickedButtonCreateConfirmationWindow()
+void createBoard::closeWindow()
 {
-    this->close();
-    emit signalClickedButtonCreate();
+    delete this;
 }
+
+

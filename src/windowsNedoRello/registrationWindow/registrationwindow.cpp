@@ -7,8 +7,8 @@ registrationWindow::registrationWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->buttonCancel,       &QPushButton::clicked,      this, &QWidget::close);
     connect(ui->buttonCancel,       &QPushButton::clicked,      this, &registrationWindow::slotClickedButtonCancel);
+    connect(ui->buttonCancel,       &QPushButton::clicked,      this, &registrationWindow::closeWindow);
 
     connect(ui->buttonSave,         &QPushButton::clicked,      this, &registrationWindow::slotClickedButtonSave);
 
@@ -101,4 +101,9 @@ QString registrationWindow::getSecondPassword()
 {
     QString password = ui->editSecondPassword->text();
     return password;
+}
+
+void registrationWindow::closeWindow()
+{
+    delete this;
 }

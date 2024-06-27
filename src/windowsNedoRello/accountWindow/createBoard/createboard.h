@@ -1,8 +1,6 @@
 #ifndef CREATEBOARD_H
 #define CREATEBOARD_H
 
-#include "confirmationwindow.h"
-
 #include <QWidget>
 #include <QMessageBox>
 
@@ -18,15 +16,17 @@ public:
     explicit createBoard(QWidget *parent = nullptr);
     ~createBoard();
 
-    confirmationWindow confWindow;
 private:
     Ui::createBoard *ui;
+
+protected:
+    void closeEvent(QCloseEvent* event);
 
 public slots:
     QString getNameBoard();
     QString getDescriptionBoard();
     void slotClickedButtonCreate();
-    void slotClickedButtonCreateConfirmationWindow();
+    void closeWindow();
 
 signals:
     void signalClickedButtonCreate();

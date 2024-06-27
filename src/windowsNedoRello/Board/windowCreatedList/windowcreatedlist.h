@@ -19,9 +19,13 @@ public:
 private:
     Ui::windowCreatedList *ui;
 
+protected:
+    void closeEvent(QCloseEvent* event);
+
 public slots:
     QString getTitleList();
     void    slotClickedCreatedButton();
+    void    closWindow();
 
 signals:
     void signalClickedCreatedButton();

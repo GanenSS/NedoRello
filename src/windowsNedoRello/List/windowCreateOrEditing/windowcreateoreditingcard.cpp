@@ -7,7 +7,7 @@ windowCreateOrEditingCard::windowCreateOrEditingCard(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->buttonCancel, &QPushButton::clicked, this, &QWidget::close);
+    connect(ui->buttonCancel, &QPushButton::clicked, this, &windowCreateOrEditingCard::closeWindow);
     connect(ui->buttonCreate, &QPushButton::clicked, this, &windowCreateOrEditingCard::clickedButtonCreate);
 
     ui->dateTimeDeadLines->setDisplayFormat("hh:mm dd.MM.yyyy");
@@ -46,7 +46,19 @@ void windowCreateOrEditingCard::clickedButtonCreate()
                 info.description = ui->editDesriptionCard->toPlainText();
                 info.deadLines = ui->dateTimeDeadLines->dateTime();
                 emit signalclickedButtonCreate(info);
+
+                closeWindow();
             }
         }
     }
+}
+
+void windowCreateOrEditingCard::closeWindow()
+{
+    delete this;
+}
+
+void windowCreateOrEditingCard::closeEvent(QCloseEvent *event)
+{
+    closeWindow();
 }

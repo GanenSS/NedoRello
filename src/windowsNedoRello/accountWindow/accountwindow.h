@@ -24,19 +24,24 @@ public:
         QString login;
     };
 
-    createBoard creatBoard;
+    createBoard *creatBoard;
 
     int userId;
 private:
     Ui::accountWindow *ui;
 
+protected:
+    void closeEvent(QCloseEvent* event);
 public slots:
     void setLogin(const QString &login);
     QString getLogin();
     void openCreateBoard();
     void slotCreatedBoard();
+    void closeWindow();
+    void slotClickedButtonExit();
 signals:
     void signalCreatedBoardAccountWindow(const boardInfo& info);
+    void signalClickedButtonExit();
 };
 
 #endif // ACCOUNTWINDOW_H

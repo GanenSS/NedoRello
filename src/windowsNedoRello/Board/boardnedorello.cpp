@@ -9,7 +9,6 @@ boardNedoRello::boardNedoRello(QWidget *parent)
 
     connect(ui->buttonDescription,  &QPushButton::clicked,                          this, &boardNedoRello::clickedButtonDescription);
     connect(ui->buttonAddList,      &QPushButton::clicked,                          this, &boardNedoRello::slotClickedButtonAddList);
-    connect(&winCreatedList,        &windowCreatedList::signalClickedCreatedButton, this, &boardNedoRello::slotRequestToCreatelist);
 
     popUp = new PopUp();
 
@@ -49,14 +48,18 @@ void boardNedoRello::clickedButtonDescription()
 
 void boardNedoRello::slotClickedButtonAddList()
 {
-    winCreatedList.show();
+    winCreatedList = new windowCreatedList;
+
+    connect(winCreatedList, &windowCreatedList::signalClickedCreatedButton, this, &boardNedoRello::slotRequestToCreatelist);
+
+    winCreatedList->show();
 }
 
 void boardNedoRello::slotRequestToCreatelist()
 {
     listInfo info;
     info.idBoard = IdBoard;
-    info.title = winCreatedList.getTitleList();
+    info.title = winCreatedList->getTitleList();
     emit signalRequestToCreatelistBoard(info);
 }
 

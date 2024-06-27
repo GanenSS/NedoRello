@@ -54,9 +54,9 @@ public:
 
     };
 
-    firstWindow fstWindow;
-    registrationWindow regWindow;
-    accountWindow accWindow;
+    firstWindow *fstWindow;
+    registrationWindow *regWindow;
+    accountWindow *accWindow;
     boardNedoRello *board;
     listNedoRello *list;
     cardNedoRello *card;
@@ -72,8 +72,9 @@ private slots:
     void getLoginCredentialsRegistrationWindow(const registrationWindow::LoginCredentials& cred);
     void loginIsInDbRegWindow();
     void slotCreatedAccountRegistrationWindow();
-    void openAccountWindow(const QString &login);
 
+    void openAccountWindow(const QString &login);
+    void exitFromAccaunt();
     void slotClickedButtonCreateBoard(const accountWindow::boardInfo& info);
     void createdBoard(const boardInfo& info);
 

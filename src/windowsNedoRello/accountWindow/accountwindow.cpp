@@ -7,12 +7,17 @@ accountWindow::accountWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->buttonCreate, &QPushButton::clicked, this, &accountWindow::openCreateBoard);
-    connect(&creatBoard, &createBoard::signalClickedButtonCreate, this, &accountWindow::slotCreatedBoard);
+    connect(ui->buttonExit, &QPushButton::clicked, this, &accountWindow::slotClickedButtonExit);
 }
 
 accountWindow::~accountWindow()
 {
     delete ui;
+}
+
+void accountWindow::closeEvent(QCloseEvent *event)
+{
+    closeWindow();
 }
 
 void accountWindow::setLogin(const QString &login)
@@ -27,14 +32,28 @@ QString accountWindow::getLogin()
 
 void accountWindow::openCreateBoard()
 {
-    creatBoard.show();
+    creatBoard = new createBoard;
+
+    connect(creatBoard, &createBoard::signalClickedButtonCreate, this, &accountWindow::slotCreatedBoard);
+
+    creatBoard->show();
 }
 
 void accountWindow::slotCreatedBoard()
 {
     boardInfo info;
-    info.name = creatBoard.getNameBoard();
-    info.description = creatBoard.getDescriptionBoard();
+    info.name = creatBoard->getNameBoard();
+    info.description = creatBoard->getDescriptionBoard();
     info.login = ui->labelLogin->text();
     emit signalCreatedBoardAccountWindow(info);
+}
+
+void accountWindow::closeWindow()
+{
+    delete this;
+}
+
+void accountWindow::slotClickedButtonExit()
+{
+    emit signalClickedButtonExit();
 }

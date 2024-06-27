@@ -29,6 +29,8 @@ private:
 
 public slots:
     void clickedButtonCreate();
+    void closeWindow();
+    void closeEvent(QCloseEvent* event);
 
 signals:
     void signalclickedButtonCreate(const infoCard& info);

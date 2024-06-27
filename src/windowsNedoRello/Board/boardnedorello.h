@@ -34,7 +34,7 @@ private:
 
     PopUp *popUp;
 
-    windowCreatedList winCreatedList;
+    windowCreatedList *winCreatedList;
 
     QSpacerItem* spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* spacerList;

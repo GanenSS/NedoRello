@@ -30,6 +30,8 @@ public slots:
     void    releasedButtonVision();
     void    setErrorText(const QString &ErrorMessage);
 
+    void    closeWindow();
+
     QString getLogin();
     QString getPassword();
 
