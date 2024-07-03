@@ -1,8 +1,12 @@
 #ifndef CREATEBOARD_H
 #define CREATEBOARD_H
 
+#include "styles.h"
+
 #include <QWidget>
 #include <QMessageBox>
+#include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class createBoard;
@@ -21,8 +25,10 @@ private:
 
 protected:
     void closeEvent(QCloseEvent* event);
+    void paintEvent(QPaintEvent *event);
 
 public slots:
+    void setInterfaceStyle();
     QString getNameBoard();
     QString getDescriptionBoard();
     void slotClickedButtonCreate();

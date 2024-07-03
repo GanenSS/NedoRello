@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/Assets/bg.png);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -62,6 +65,29 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonDeleteCard">
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../resourse.qrc">
+           <normaloff>:/Assets/remove.png</normaloff>:/Assets/remove.png</iconset>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -108,31 +134,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../../../Assets/resources.qrc">
-               <normaloff>:/Yes.png</normaloff>:/Yes.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="buttonNotReady">
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../Assets/resources.qrc">
-               <normaloff>:/No.png</normaloff>:/No.png</iconset>
+              <iconset resource="../../../resourse.qrc">
+               <normaloff>:/Assets/Yes.png</normaloff>:/Assets/Yes.png</iconset>
              </property>
             </widget>
            </item>
@@ -154,8 +157,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../../../Assets/resources.qrc">
-               <normaloff>:/edit.png</normaloff>:/edit.png</iconset>
+              <iconset resource="../../../resourse.qrc">
+               <normaloff>:/Assets/edit.png</normaloff>:/Assets/edit.png</iconset>
              </property>
             </widget>
            </item>
@@ -173,7 +176,21 @@
             </spacer>
            </item>
            <item>
-            <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+            <widget class="QDateTimeEdit" name="dateTimeEdit">
+             <property name="specialValueText">
+              <string/>
+             </property>
+             <property name="dateTime">
+              <datetime>
+               <hour>0</hour>
+               <minute>0</minute>
+               <second>0</second>
+               <year>2000</year>
+               <month>1</month>
+               <day>1</day>
+              </datetime>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -187,6 +204,19 @@
             <string>Создатель карточки:</string>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item>
           <widget class="QLabel" name="labelLoginUser">
@@ -204,7 +234,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../Assets/resources.qrc"/>
+  <include location="../../../resourse.qrc"/>
  </resources>
  <connections/>
 </ui>

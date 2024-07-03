@@ -5,13 +5,16 @@ combiningWindows::combiningWindows(QObject *parent)
 {
     openFirstWindow();
 
-    connect(this,       &combiningWindows::signalLoginIsInDatabaseRegWindow,        this, &combiningWindows::loginIsInDbRegWindow);
-    connect(this,       &combiningWindows::signalInputInAccount,                    this, &combiningWindows::openAccountWindow);
-    connect(this,       &combiningWindows::signalCreatedAccountRegistrationWindow,  this, &combiningWindows::slotCreatedAccountRegistrationWindow);
-    connect(this,       &combiningWindows::signalErrorLoginCredentialsFirstWindow,  this, &combiningWindows::wrongPasswordFirstWindow);
-    connect(this,       &combiningWindows::signalCreatedBoard,                      this, &combiningWindows::createdBoard);
-    connect(this,       &combiningWindows::signalCreatedList,                       this, &combiningWindows::createdList);
-    connect(this,       &combiningWindows::signalCreatedCard,                       this, &combiningWindows::createdCard);
+    connect(this, &combiningWindows::signalLoginIsInDatabaseRegWindow,          this, &combiningWindows::loginIsInDbRegWindow);
+    connect(this, &combiningWindows::signalInputInAccount,                      this, &combiningWindows::openAccountWindow);
+    connect(this, &combiningWindows::signalCreatedAccountRegistrationWindow,    this, &combiningWindows::slotCreatedAccountRegistrationWindow);
+    connect(this, &combiningWindows::signalErrorLoginCredentialsFirstWindow,    this, &combiningWindows::wrongPasswordFirstWindow);
+    connect(this, &combiningWindows::signalCreatedBoard,                        this, &combiningWindows::createdBoard);
+    connect(this, &combiningWindows::signalCreatedList,                         this, &combiningWindows::createdList);
+    connect(this, &combiningWindows::signalCreatedCard,                         this, &combiningWindows::createdCard);
+    connect(this, &combiningWindows::signalNotCompletedCard,                    this, &combiningWindows::slotNotCompletedCard);
+    connect(this, &combiningWindows::signalCardCompleted,                       this, &combiningWindows::slotCompletedCard);
+    connect(this, &combiningWindows::signalCardInProcess,                       this, &combiningWindows::slotCardInProcess);
 
 }
 
@@ -80,14 +83,12 @@ void combiningWindows::createdBoard(const boardInfo &info) //Создание Д
 {
     board = new boardNedoRello;
     board->IdBoard = info.idBoard;
-    qDebug() << "Board: idboard" << board->IdBoard;
     board->setNameBoard(info.name);
     board->setDescriptionBoard(info.description);
     widgetsBoard.append(board);
     board->show();
 
     accWindow->userId = info.userId;
-    qDebug() << accWindow->userId;
 
     connect(board, &boardNedoRello::signalRequestToCreatelistBoard, this, &combiningWindows::slotRequestToCreatelist);
 
@@ -139,39 +140,72 @@ void combiningWindows::slotRequestToCreateCard(const listNedoRello::infoCardList
     card.deadLines = info.deadLines;
     card.idList = info.idList;
     card.userID = accWindow->userId;
-    card.stage = "В ПРОЦЕССЕ";
     emit signalRequestToCreateCard(card);
 }
 
 void combiningWindows::createdCard(const cardInfo &info)
 {
     cardNedoRello *card = new cardNedoRello;
+
+    connect(card, &cardNedoRello::signalTimeOut,                            this, &combiningWindows::signalCardTimeOut);
+    connect(card, &cardNedoRello::signalClickedButtonReady,                 this, &combiningWindows::signalClickedButtonReady);
+    connect(card, &cardNedoRello::signalClickedButtonReadyOnCompletedCard,  this, &combiningWindows::signalClickedButtonReadyOnCompletedCard);
+
+    card->idCard = info.idCard;
     card->setTitle(info.title);
     card->setDescription(info.description);
     card->setDeadLines(info.deadLines);
     card->setLogin(accWindow->getLogin());
 
+    widgetsCard.append(card);
+
     for(int i = 0; i < widgetsList.length(); i++)
     {
         if(widgetsList[i]->idList == info.idList)
         {
-            for(int j = 0; j < widgetsBoard.length(); j++)
+            if(widgetsList[i]->counterCard != 0)
             {
-                if(widgetsBoard[j]->IdBoard == widgetsList[i]->idBoard)
-                {
-                    if(widgetsList[i]->counterCard != 0)
-                    {
-                        widgetsList[i]->resizeList();
-                        widgetsBoard[j]->updatingGeometryScrolArea();
+                widgetsList[i]->resizeList();
 
-                        widgetsList[i]->addCardInList(card);
-                    }
-                    else
-                    {
-                        widgetsList[i]->addCardInList(card);
-                    }
-                }
+                widgetsList[i]->addCardInList(card);
             }
+            else
+            {
+                widgetsList[i]->addCardInList(card);
+            }
+        }
+    }
+}
+
+void combiningWindows::slotNotCompletedCard(const int &cardId)
+{
+    for(int i = 0; i < widgetsCard.length(); i++)
+    {
+        if(widgetsCard[i]->idCard == cardId)
+        {
+            widgetsCard[i]->slotNotCompletedCard();
+        }
+    }
+}
+
+void combiningWindows::slotCompletedCard(const int &idCard)
+{
+    for(int i = 0; i < widgetsCard.length(); i++)
+    {
+        if(widgetsCard[i]->idCard == idCard)
+        {
+            widgetsCard[i]->slotCompletedCard();
+        }
+    }
+}
+
+void combiningWindows::slotCardInProcess(const int &idCard)
+{
+    for(int i = 0; i < widgetsCard.length(); i++)
+    {
+        if(widgetsCard[i]->idCard == idCard)
+        {
+            widgetsCard[i]->slotCardInProcess();
         }
     }
 }

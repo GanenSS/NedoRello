@@ -10,6 +10,9 @@ passDB::passDB(QObject *parent)
     connect(&combWindows, &combiningWindows::signalClickedButtonCreateBoard,                this, &passDB::createdNewBoard);
     connect(&combWindows, &combiningWindows::signalRequestToCreatelist,                     this, &passDB::createdNewList);
     connect(&combWindows, &combiningWindows::signalRequestToCreateCard,                     this, &passDB::createdNewCard);
+    connect(&combWindows, &combiningWindows::signalCardTimeOut,                             this, &passDB::cardTimeOut);
+    connect(&combWindows, &combiningWindows::signalClickedButtonReady,                      this, &passDB::cardClickedButtonReady);
+    connect(&combWindows, &combiningWindows::signalClickedButtonReadyOnCompletedCard,       this, &passDB::slotCardInProcess);
 }
 
 passDB::~passDB()
@@ -264,7 +267,7 @@ void passDB::createdNewCard(const combiningWindows::cardInfo &info)
     card.description = info.description;
     card.deadLinesString = info.deadLines.toString("yyyy-MM-dd HH:mm:ss");
     card.deadLines = info.deadLines;
-    card.stage = info.stage;
+    card.stage = cardInProcess;
     card.idList = info.idList;
     card.userID = info.userID;
 
@@ -290,7 +293,7 @@ void passDB::addRowCard(const combiningWindows::cardInfo &info)
     index = modelCard->index(row, dateColumnCard);
     modelCard->setData(index, info.deadLinesString);
 
-    index = modelCard->index(row, completedColumnCard);
+    index = modelCard->index(row, processColumnCard);
     modelCard->setData(index, info.stage);
 
     index = modelCard->index(row, listIdColumnCard);
@@ -300,4 +303,32 @@ void passDB::addRowCard(const combiningWindows::cardInfo &info)
     modelCard->setData(index, info.userID);
 
     modelCard->submitAll();
+}
+
+void passDB::cardTimeOut(const int &cardId)
+{
+    QModelIndex index = modelCard->index(cardId, processColumnCard);
+    modelCard->setData(index, notCompletedCard);
+
+    modelCard->submitAll();
+    emit combWindows.signalNotCompletedCard(cardId);
+
+}
+
+void passDB::cardClickedButtonReady(const int &idCard)
+{
+    QModelIndex index = modelCard->index(idCard, processColumnCard);
+    modelCard->setData(index, completedCard);
+
+    modelCard->submitAll();
+    emit combWindows.signalCardCompleted(idCard);
+}
+
+void passDB::slotCardInProcess(const int &idCard)
+{
+    QModelIndex index = modelCard->index(idCard, processColumnCard);
+    modelCard->setData(index, cardInProcess);
+
+    modelCard->submitAll();
+    emit combWindows.signalCardInProcess(idCard);
 }

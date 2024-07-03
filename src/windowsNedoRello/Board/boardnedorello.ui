@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>NedoRello</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/Assets/bg.png);</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -45,15 +48,15 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>156</width>
-         <height>64</height>
+         <width>150</width>
+         <height>70</height>
         </size>
        </property>
        <property name="text">
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../../Assets/resources.qrc">:/Nedorello.png</pixmap>
+        <pixmap resource="../../../resourse.qrc">:/Assets/NedoRello.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -78,7 +81,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="2" column="2">
-      <widget class="QPushButton" name="buttonDeleteUser">
+      <widget class="QPushButton" name="buttonSearchUser">
        <property name="minimumSize">
         <size>
          <width>190</width>
@@ -181,20 +184,12 @@
           <x>0</x>
           <y>0</y>
           <width>941</width>
-          <height>573</height>
+          <height>567</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayoutForList">
-           <item>
-            <widget class="QWidget" name="containerWidget" native="true">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 0, 0);</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QHBoxLayout" name="horBoxLayoutLists"/>
          </item>
         </layout>
        </widget>
@@ -205,7 +200,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../Assets/resources.qrc"/>
+  <include location="../../../resourse.qrc"/>
  </resources>
  <connections/>
 </ui>

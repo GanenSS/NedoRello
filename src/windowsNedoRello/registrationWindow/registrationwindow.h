@@ -1,7 +1,11 @@
 #ifndef REGISTRATIONWINDOW_H
 #define REGISTRATIONWINDOW_H
 
+#include "styles.h"
+
 #include <QWidget>
+#include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class registrationWindow;
@@ -21,7 +25,12 @@ public:
         QString password;
     };
 
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
 public slots:
+    void setInterfaceStyle();
     void slotClickedButtonCancel();
     void slotClickedButtonSave();
 

@@ -1,7 +1,11 @@
 #ifndef WINDOWCREATEOREDITINGCARD_H
 #define WINDOWCREATEOREDITINGCARD_H
 
+#include "styles.h"
+
 #include <QWidget>
+#include <QPainter>
+#include <QStyleOption>
 #include <QDateTime>
 #include <QMessageBox>
 
@@ -27,7 +31,11 @@ public:
 private:
     Ui::windowCreateOrEditingCard *ui;
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 public slots:
+    void setInterfaceStyle();
     void clickedButtonCreate();
     void closeWindow();
     void closeEvent(QCloseEvent* event);

@@ -63,6 +63,7 @@ public:
 private:
     QVector<boardNedoRello*> widgetsBoard;
     QVector<listNedoRello*>  widgetsList;
+    QVector<cardNedoRello*>  widgetsCard;
 private slots:
     void openFirstWindow();
     void getLoginCredentialsFirstWindow(const firstWindow::LoginCredentials& cred);
@@ -85,6 +86,9 @@ private slots:
 
     void slotRequestToCreateCard(const listNedoRello::infoCardList& info);
     void createdCard(const cardInfo& info);
+    void slotNotCompletedCard(const int& cardId);
+    void slotCompletedCard(const int& idCard);
+    void slotCardInProcess(const int& idCard);
 
 signals:
     void signalGetLoginCredentialsFirstWindow(const LoginCredentials& cred);
@@ -104,6 +108,13 @@ signals:
 
     void signalRequestToCreateCard(const cardInfo& info);
     void signalCreatedCard(const cardInfo& info);
+    void signalCardTimeOut(const int& cardId);
+    void signalNotCompletedCard(const int& cardId);
+    void signalClickedButtonReady(const int& idCard);
+    void signalCardCompleted(const int& idCard);
+    void signalClickedButtonReadyOnCompletedCard(const int& idCard);
+    void signalCardInProcess(const int& idCard);
+
 
 };
 

@@ -6,6 +6,9 @@ createBoard::createBoard(QWidget *parent)
     , ui(new Ui::createBoard)
 {
     ui->setupUi(this);
+
+    setInterfaceStyle();
+
     connect(ui->buttonCreate, &QPushButton::clicked, this, &createBoard::slotClickedButtonCreate);
     connect(ui->buttonCancel, &QPushButton::clicked, this, &createBoard::closeWindow);
 }
@@ -18,6 +21,28 @@ createBoard::~createBoard()
 void createBoard::closeEvent(QCloseEvent *event)
 {
     closeWindow();
+}
+
+void createBoard::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void createBoard::setInterfaceStyle()
+{
+    ui->buttonCreate->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonCancel->setStyleSheet(Styles::getButtonStyle());
+
+    ui->labelNameBoard->setStyleSheet(Styles::getLabelText());
+    ui->labelDescriptionBoard->setStyleSheet(Styles::getLabelText());
+
+    ui->editNameBoard->setStyleSheet(Styles::getEditStyle());
+    ui->editDesriptionBoard->setStyleSheet(Styles::getEditStyle());
 }
 
 QString createBoard::getNameBoard()

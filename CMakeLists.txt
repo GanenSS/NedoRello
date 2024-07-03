@@ -15,6 +15,7 @@ find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 include_directories(
     src/passBD
+    src/styleHelper
     libForPQSL
 
     src/windowsNedoRello/firstWindow
@@ -83,7 +84,10 @@ set(PROJECT_SOURCES
         src/windowsNedoRello/Cards/cardnedorello.h
         src/windowsNedoRello/Cards/cardnedorello.ui
 
-        Assets/resources.qrc
+        resourse.qrc
+
+        src/styleHelper/styles.cpp
+        src/styleHelper/styles.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

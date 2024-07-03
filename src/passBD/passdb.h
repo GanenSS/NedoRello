@@ -57,9 +57,13 @@ private:
         const int nameColumnCard        = 1;
         const int descriptionColumnCard = 2;
         const int dateColumnCard        = 3;
-        const int completedColumnCard   = 4;
+        const int processColumnCard     = 4;
         const int listIdColumnCard      = 5;
         const int userIdColumnCard      = 6;
+
+    const QString cardInProcess     = "В ПРОЦЕССЕ";
+    const QString completedCard     = "ВЫПОЛНЕННО";
+    const QString notCompletedCard  = "НЕ ВЫПОЛНЕННО";
 
 public slots:
     bool    createConnection();
@@ -81,6 +85,9 @@ public slots:
 
     void createdNewCard(const combiningWindows::cardInfo& info);
     void addRowCard(const combiningWindows::cardInfo& info);
+    void cardTimeOut(const int& cardId);
+    void cardClickedButtonReady(const int& idCard);
+    void slotCardInProcess(const int& idCard);
 };
 
 #endif // LISTDB_H

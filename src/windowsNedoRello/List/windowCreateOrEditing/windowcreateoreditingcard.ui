@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/Assets/bg.png);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -52,7 +55,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QDateTimeEdit" name="dateTimeDeadLines"/>
+      <widget class="QDateTimeEdit" name="dateTimeDeadLines">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>263</width>
+         <height>28</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

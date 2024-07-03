@@ -1,7 +1,11 @@
 #ifndef FIRSTWINDOW_H
 #define FIRSTWINDOW_H
 
+#include "styles.h"
+
 #include <QWidget>
+#include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class firstWindow;
@@ -23,7 +27,11 @@ public:
 private:
     Ui::firstWindow *ui;
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 public slots:
+    void    setInterfaceStyle();
     void    slotClickedButtonRegistration();
     void    slotClickedButtonEnter();
     void    pressedButtonVision();

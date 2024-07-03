@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>add.png</file>
+        <file>arrowDown.png</file>
+        <file>arrowUP.png</file>
+        <file>bg.png</file>
+        <file>edit.png</file>
+        <file>NedoRello.png</file>
+        <file>No.png</file>
+        <file>remove.png</file>
+        <file>visibility.png</file>
+        <file>Yes.png</file>
+    </qresource>
+</RCC>

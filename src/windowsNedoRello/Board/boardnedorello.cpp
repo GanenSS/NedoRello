@@ -7,14 +7,15 @@ boardNedoRello::boardNedoRello(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setInterfaceStyle();
+
     connect(ui->buttonDescription,  &QPushButton::clicked,                          this, &boardNedoRello::clickedButtonDescription);
     connect(ui->buttonAddList,      &QPushButton::clicked,                          this, &boardNedoRello::slotClickedButtonAddList);
 
     popUp = new PopUp();
 
-    horBoxLayoutLists = new QHBoxLayout(ui->containerWidget);
-    horBoxLayoutLists->addItem(spacer);
-    ui->containerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    ui->horBoxLayoutLists->addItem(spacer);
 }
 
 boardNedoRello::~boardNedoRello()
@@ -27,6 +28,27 @@ void boardNedoRello::closeEvent(QCloseEvent *event)
 {
     emit destroyedBoard(IdBoard);
 
+}
+
+void boardNedoRello::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void boardNedoRello::setInterfaceStyle()
+{
+    ui->scrollArea->setStyleSheet(Styles::getScrollAreaStyle());
+
+    ui->buttonAddList->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonDescription->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonSearchUser->setStyleSheet(Styles::getButtonStyle());
+
+    ui->labelTitle->setStyleSheet(Styles::getLabelText());
 }
 
 void boardNedoRello::setNameBoard(const QString &name)
@@ -72,18 +94,12 @@ void boardNedoRello::addListInBoard(QWidget *list)
     spacerList = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     vertBoxLayoutLists->addItem(spacerList);
 
-    horBoxLayoutLists->removeItem(spacer);
-    horBoxLayoutLists->addLayout(vertBoxLayoutLists);
-    horBoxLayoutLists->addItem(spacer);
+    ui->horBoxLayoutLists->removeItem(spacer);
+    ui->horBoxLayoutLists->addLayout(vertBoxLayoutLists);
+    ui->horBoxLayoutLists->addItem(spacer);
 
-    ui->verticalLayoutForList->update();
+    ui->horBoxLayoutLists->update();
 }
 
-void boardNedoRello::updatingGeometryScrolArea()
-{
-    // ui->scrollArea->setWidgetResizable(true);
-    // ui->scrollAreaWidgetContents->updateGeometry();
-    // ui->scrollArea->updateGeometry();
-    // ui->scrollArea->repaint();
-}
+
 

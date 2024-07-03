@@ -7,6 +7,8 @@ windowCreateOrEditingCard::windowCreateOrEditingCard(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setInterfaceStyle();
+
     connect(ui->buttonCancel, &QPushButton::clicked, this, &windowCreateOrEditingCard::closeWindow);
     connect(ui->buttonCreate, &QPushButton::clicked, this, &windowCreateOrEditingCard::clickedButtonCreate);
 
@@ -19,6 +21,31 @@ windowCreateOrEditingCard::windowCreateOrEditingCard(QWidget *parent)
 windowCreateOrEditingCard::~windowCreateOrEditingCard()
 {
     delete ui;
+}
+
+void windowCreateOrEditingCard::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void windowCreateOrEditingCard::setInterfaceStyle()
+{
+    ui->dateTimeDeadLines->setStyleSheet(Styles::getDateTimeEditStyle());
+
+    ui->label->setStyleSheet(Styles::getLabelText());
+    ui->labelDescriptionBoard->setStyleSheet(Styles::getLabelText());
+    ui->labelNameBoard->setStyleSheet(Styles::getLabelText());
+
+    ui->buttonCancel->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonCreate->setStyleSheet(Styles::getButtonStyle());
+
+    ui->editDesriptionCard->setStyleSheet(Styles::getEditStyle());
+    ui->editTitleCard->setStyleSheet(Styles::getEditStyle());
 }
 
 void windowCreateOrEditingCard::clickedButtonCreate()

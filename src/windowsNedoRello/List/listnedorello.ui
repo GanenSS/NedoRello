@@ -7,26 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>352</width>
-    <height>317</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>352</width>
-    <height>317</height>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>352</width>
-    <height>317</height>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(105, 113, 125);</string>
+   <string notr="true">background-image: url(:/Assets/bg.png);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -40,6 +40,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <layout class="QVBoxLayout" name="verticalLayoutForCards">
+        <property name="spacing">
+         <number>25</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
@@ -80,7 +83,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="buttonEditing">
             <property name="minimumSize">
              <size>
               <width>20</width>
@@ -97,8 +100,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../Assets/resources.qrc">
-              <normaloff>:/edit.png</normaloff>:/edit.png</iconset>
+             <iconset resource="../../../resourse.qrc">
+              <normaloff>:/Assets/edit.png</normaloff>:/Assets/edit.png</iconset>
             </property>
            </widget>
           </item>
@@ -155,8 +158,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../Assets/resources.qrc">
-         <normaloff>:/add.png</normaloff>:/add.png</iconset>
+        <iconset resource="../../../resourse.qrc">
+         <normaloff>:/Assets/add.png</normaloff>:/Assets/add.png</iconset>
        </property>
       </widget>
      </item>
@@ -202,8 +205,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../Assets/resources.qrc">
-         <normaloff>:/remove.png</normaloff>:/remove.png</iconset>
+        <iconset resource="../../../resourse.qrc">
+         <normaloff>:/Assets/remove.png</normaloff>:/Assets/remove.png</iconset>
        </property>
       </widget>
      </item>
@@ -238,7 +241,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../Assets/resources.qrc"/>
+  <include location="../../../resourse.qrc"/>
  </resources>
  <connections/>
 </ui>

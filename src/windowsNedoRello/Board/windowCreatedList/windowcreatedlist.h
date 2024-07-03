@@ -1,8 +1,12 @@
 #ifndef WINDOWCREATEDLIST_H
 #define WINDOWCREATEDLIST_H
 
+#include "styles.h"
+
 #include <QWidget>
 #include <QMessageBox>
+#include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class windowCreatedList;
@@ -21,8 +25,10 @@ private:
 
 protected:
     void closeEvent(QCloseEvent* event);
+    void paintEvent(QPaintEvent *event);
 
 public slots:
+    void    setInterfaceStyle();
     QString getTitleList();
     void    slotClickedCreatedButton();
     void    closWindow();

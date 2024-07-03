@@ -7,6 +7,8 @@ registrationWindow::registrationWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setInterfaceStyle();
+
     connect(ui->buttonCancel,       &QPushButton::clicked,      this, &registrationWindow::slotClickedButtonCancel);
     connect(ui->buttonCancel,       &QPushButton::clicked,      this, &registrationWindow::closeWindow);
 
@@ -24,6 +26,34 @@ registrationWindow::registrationWindow(QWidget *parent)
 registrationWindow::~registrationWindow()
 {
     delete ui;
+}
+
+void registrationWindow::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void registrationWindow::setInterfaceStyle()
+{
+    ui->buttonSave->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonCancel->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonFirstVision->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonSecondVision->setStyleSheet(Styles::getButtonStyle());
+
+    ui->labelLogin->setStyleSheet(Styles::getLabelText());
+    ui->labelFirstPassword->setStyleSheet(Styles::getLabelText());
+    ui->labelSecondPassword->setStyleSheet(Styles::getLabelText());
+    ui->labelErrorePasswordMessage->setStyleSheet(Styles::getLabelText());
+    ui->labelErrorLoginMessage->setStyleSheet(Styles::getLabelText());
+
+    ui->editLogin->setStyleSheet(Styles::getEditStyle());
+    ui->editFirstPassword->setStyleSheet(Styles::getEditStyle());
+    ui->editSecondPassword->setStyleSheet(Styles::getEditStyle());
 }
 
 void registrationWindow::slotClickedButtonCancel()

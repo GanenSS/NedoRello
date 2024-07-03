@@ -5,8 +5,10 @@ firstWindow::firstWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::firstWindow)
 {
-
     ui->setupUi(this);
+
+    setInterfaceStyle();
+
     connect(ui->buttonRegistration, &QPushButton::clicked,      this, &firstWindow::slotClickedButtonRegistration);
     connect(ui->buttonRegistration, &QPushButton::clicked,      this, &firstWindow::closeWindow);
     connect(ui->buttonEnter,        &QPushButton::clicked,      this, &firstWindow::slotClickedButtonEnter);
@@ -17,6 +19,31 @@ firstWindow::firstWindow(QWidget *parent)
 firstWindow::~firstWindow()
 {
     delete ui;
+}
+
+void firstWindow::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void firstWindow::setInterfaceStyle()
+{
+    this->setStyleSheet(Styles::getAccountWidgetStyle());
+    ui->buttonEnter->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonRegistration->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonVision->setStyleSheet(Styles::getButtonStyle());
+    ui->labelLogin->setStyleSheet(Styles::getLabelText());
+    ui->labelPassword->setStyleSheet(Styles::getLabelText());
+    ui->labelPasswordErroreMessage->setStyleSheet(Styles::getLabelText());
+    ui->editLogin->setStyleSheet(Styles::getEditStyle());
+    ui->editPassword->setStyleSheet(Styles::getEditStyle());
+    ui->textBrowser->setStyleSheet(Styles::getTextBrowserStyle());
+
 }
 
 void firstWindow::slotClickedButtonRegistration()

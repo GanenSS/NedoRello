@@ -18,11 +18,15 @@ PopUp::PopUp(QWidget *parent) : QWidget(parent)
     // Настройка текста уведомления
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter); // Устанавливаем по центру
     // И настраиваем стили
-    label.setStyleSheet("QLabel { color : white; "
-                        "margin-top: 6px;"
-                        "margin-bottom: 6px;"
-                        "margin-left: 10px;"
-                        "margin-right: 10px; }");
+    label.setStyleSheet("QLabel {"
+                        "   font-family: 'Roboto Medium';"
+                        "   font-weight: bold;"
+                        "   font-size: 12px;"
+                        "   color: #ffffff;"
+                        "   margin-top: 6px;"
+                        "   margin-bottom: 6px;"
+                        "   margin-left: 10px;"
+                        "   margin-right: 10px; }");
 
     // Производим установку текста в размещение, ...
     layout.addWidget(&label, 0, 0);

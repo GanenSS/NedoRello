@@ -3,7 +3,11 @@
 
 #include "createboard.h"
 #include "inputboard.h"
+#include "styles.h"
+
 #include <QWidget>
+#include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class accountWindow;
@@ -32,7 +36,9 @@ private:
 
 protected:
     void closeEvent(QCloseEvent* event);
+    void paintEvent(QPaintEvent *event);
 public slots:
+    void setInterfaceStyle();
     void setLogin(const QString &login);
     QString getLogin();
     void openCreateBoard();

@@ -7,12 +7,37 @@ listNedoRello::listNedoRello(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setInterfaceStyle();
+
     connect(ui->buttonAddCard, &QPushButton::clicked, this, &listNedoRello::slotClickedButtonAddCard);
 }
 
 listNedoRello::~listNedoRello()
 {
     delete ui;
+}
+
+void listNedoRello::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void listNedoRello::setInterfaceStyle()
+{
+    this->setStyleSheet(Styles::getListWidgetStyle());
+
+    ui->buttonAddCard->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonRemoveList->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonEditing->setStyleSheet(Styles::getButtonStyle());
+
+    ui->labelTitle->setStyleSheet(Styles::getLabelText());
+    ui->label->setStyleSheet(Styles::getLabelText());
+    ui->label_2->setStyleSheet(Styles::getLabelText());
 }
 
 void listNedoRello::createdList()
@@ -57,7 +82,7 @@ void listNedoRello::addCardInList(QWidget *card)
 
 void listNedoRello::resizeList()
 {
-    this->setMaximumHeight(this->maximumHeight()+220);
-    this->setMinimumHeight(this->minimumHeight()+220);
+    this->setMaximumHeight(this->maximumHeight()+heightCard);
+    this->setMinimumHeight(this->minimumHeight()+heightCard);
 }
 

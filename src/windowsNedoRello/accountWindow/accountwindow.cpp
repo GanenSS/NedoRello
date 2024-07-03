@@ -6,6 +6,9 @@ accountWindow::accountWindow(QWidget *parent)
     , ui(new Ui::accountWindow)
 {
     ui->setupUi(this);
+
+    setInterfaceStyle();
+
     connect(ui->buttonCreate, &QPushButton::clicked, this, &accountWindow::openCreateBoard);
     connect(ui->buttonExit, &QPushButton::clicked, this, &accountWindow::slotClickedButtonExit);
 }
@@ -18,6 +21,30 @@ accountWindow::~accountWindow()
 void accountWindow::closeEvent(QCloseEvent *event)
 {
     closeWindow();
+}
+
+void accountWindow::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(event);
+}
+
+void accountWindow::setInterfaceStyle()
+{
+    this->setStyleSheet(Styles::getAccountWidgetStyle());
+
+    ui->labelLogin->setStyleSheet(Styles::getLabelText());
+    ui->labelAccountTables->setStyleSheet(Styles::getLabelText());
+
+    ui->buttonEnter->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonCreate->setStyleSheet(Styles::getButtonStyle());
+    ui->buttonExit->setStyleSheet(Styles::getButtonStyle());
+
+    ui->scrollArea->setStyleSheet(Styles::getScrollAreaStyle());
 }
 
 void accountWindow::setLogin(const QString &login)

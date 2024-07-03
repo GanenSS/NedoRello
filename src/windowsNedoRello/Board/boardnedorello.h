@@ -3,8 +3,11 @@
 
 #include "popup.h"
 #include "windowcreatedlist.h"
+#include "styles.h"
 
 #include <QWidget>
+#include <QPainter>
+#include <QStyleOption>
 #include <QSpacerItem>
 
 namespace Ui {
@@ -39,12 +42,13 @@ private:
     QSpacerItem* spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* spacerList;
     QVBoxLayout* vertBoxLayoutLists;
-    QHBoxLayout* horBoxLayoutLists;
 
 protected:
     void closeEvent(QCloseEvent* event);
+    void paintEvent(QPaintEvent *event);
 
 public slots:
+    void setInterfaceStyle();
     void setNameBoard(const QString& name);
     void setDescriptionBoard(const QString& desc);
     void clickedButtonDescription();
@@ -52,7 +56,6 @@ public slots:
     void slotClickedButtonAddList();
     void slotRequestToCreatelist();
     void addListInBoard(QWidget *list);
-    void updatingGeometryScrolArea();
 signals:
     void signalClickedButtonAddList();
     void signalRequestToCreatelistBoard(const listInfo& info);
